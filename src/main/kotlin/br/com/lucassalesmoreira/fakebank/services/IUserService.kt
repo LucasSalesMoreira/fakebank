@@ -7,4 +7,10 @@ import org.springframework.stereotype.Service
 @Service
 interface IUserService {
     fun create(userDTO: UserDTO): List<UserEntity>
+
+    fun findAll(): List<UserEntity>
+
+    fun update(userDTO: UserDTO, id: String): Boolean
+
+    fun delete(id: String): Boolean
 }

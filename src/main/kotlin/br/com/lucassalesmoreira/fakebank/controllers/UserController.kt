@@ -9,10 +9,36 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/user")
 class UserController(var iUserService: IUserService) {
-    @PostMapping("/add")
+    @GetMapping
+    fun index(): ResponseEntity<Any> {
+        return try {
+            ResponseEntity.ok(iUserService.findAll())
+        } catch (error: Exception) {
+            ResponseEntity.badRequest().body(MessageError("Problema ao processar a requisição"))
+        }
+    }
+    @PostMapping
     fun add(@RequestBody userDTO: UserDTO): ResponseEntity<Any> {
         return try {
             ResponseEntity.ok(iUserService.create(userDTO))
+        } catch (error: Exception) {
+            ResponseEntity.badRequest().body(MessageError("Problema ao processar a requisição"))
+        }
+    }
+
+    @PutMapping("/{id}")
+    fun update(@RequestBody userDTO: UserDTO, @PathVariable id: String): ResponseEntity<Any> {
+        return try {
+            ResponseEntity.ok(iUserService.update(userDTO, id))
+        } catch (error: Exception) {
+            ResponseEntity.badRequest().body(MessageError("Problema ao processar a requisição"))
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable id: String): ResponseEntity<Any> {
+        return try {
+            ResponseEntity.ok(iUserService.delete(id))
         } catch (error: Exception) {
             ResponseEntity.badRequest().body(MessageError("Problema ao processar a requisição"))
         }

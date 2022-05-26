@@ -10,6 +10,8 @@ data class UserEntity (
     @Id
     @Column(name="id")
     var id: String? = UUID.randomUUID().toString(),
+    @Column(name="name")
+    var name: String,
     @Column(name="email")
     var email: String,
     @Column(name="pass")
