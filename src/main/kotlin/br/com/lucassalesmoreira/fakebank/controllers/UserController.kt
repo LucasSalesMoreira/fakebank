@@ -14,7 +14,6 @@ class UserController(var iUserService: IUserService) {
         return try {
             ResponseEntity.ok(iUserService.create(userDTO))
         } catch (error: Exception) {
-            println(error.message)
             ResponseEntity.badRequest().body(MessageError("Problema ao processar a requisição"))
         }
     }
