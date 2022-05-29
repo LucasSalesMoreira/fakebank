@@ -18,11 +18,19 @@ class UserServiceImpl(var iUserRepository: IUserRepository): IUserService {
         )
         println(userEntity.toString())
         iUserRepository.save(userEntity)
-        return iUserRepository.findAll()
+        return iUserRepository.findAll().toList()
     }
 
     override fun findAll(): List<UserEntity> {
-        return iUserRepository.findAll()
+        return iUserRepository.findAll().toList()
+    }
+
+    override fun findAllById(ids: List<String>): List<UserEntity> {
+        return iUserRepository.findAllById(ids).toList()
+    }
+
+    override fun findById(id: String): UserEntity {
+        return iUserRepository.findAllById(listOf(id)).first()
     }
 
     override fun update(userDTO: UserDTO, id: String): Boolean {
@@ -41,6 +49,28 @@ class UserServiceImpl(var iUserRepository: IUserRepository): IUserService {
             return true
         } catch (error: Exception) {
             println(error.message)
+            false
+        }
+    }
+
+    override fun subtractMoney(userId: String, value: Double): Boolean {
+        return try {
+            val user = findAllById(listOf(userId)).first()
+            user.money = user.money!! - value
+            iUserRepository.updateMoneyUserById(user.money!!, user.id!!)
+            true
+        } catch (error: Exception) {
+            false
+        }
+    }
+
+    override fun addMoney(userId: String, value: Double): Boolean {
+        return try {
+            val user = findAllById(listOf(userId)).first()
+            user.money = user.money!! + value
+            iUserRepository.updateMoneyUserById(user.money!!, user.id!!)
+            true
+        } catch (error: Exception) {
             false
         }
     }

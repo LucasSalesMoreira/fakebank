@@ -10,7 +10,15 @@ interface IUserService {
 
     fun findAll(): List<UserEntity>
 
+    fun findById(id: String): UserEntity
+
+    fun findAllById(ids: List<String>): List<UserEntity>
+
     fun update(userDTO: UserDTO, id: String): Boolean
+
+    fun subtractMoney(userId: String, value: Double): Boolean
+
+    fun addMoney(userId: String, value: Double): Boolean
 
     fun delete(id: String): Boolean
 }
