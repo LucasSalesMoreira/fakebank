@@ -9,8 +9,10 @@ import org.springframework.transaction.annotation.Transactional
 
 @Repository
 interface IUserRepository: JpaRepository<UserEntity, String> {
-    @Transactional
-    @Modifying
-    @Query("update user set name = :name where id like :id")
-    fun updateUserById(name: String, id: String)
+//
+//    @Transactional
+//    @Modifying
+//    @Query("update user set name = :name where id like :id")
+//    fun updateUserById(name: String, id: String)
+    fun updateUserById(user: UserEntity, id: String): Boolean
 }
