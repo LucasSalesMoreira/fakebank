@@ -35,8 +35,7 @@ class UserServiceImpl(var iUserRepository: IUserRepository): IUserService {
 
     override fun update(userDTO: UserDTO, id: String): Boolean {
         return try {
-            //iUserRepository.updateUserById(userDTO.name, id)
-            iUserRepository.updateUserById()
+            iUserRepository.updateUserById(userDTO.name, id)
             true
         } catch (error: Exception) {
             println(error.message)
