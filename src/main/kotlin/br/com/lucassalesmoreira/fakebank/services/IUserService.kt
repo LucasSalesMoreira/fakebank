@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service
 
 @Service
 interface IUserService {
+    /**
+     * @param userDTO: UserDTO
+     * @return List<UserEntity>
+     */
     fun create(userDTO: UserDTO): List<UserEntity>
 
     fun findAll(): List<UserEntity>
