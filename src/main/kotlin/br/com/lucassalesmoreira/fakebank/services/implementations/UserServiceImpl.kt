@@ -1,21 +1,19 @@
 package br.com.lucassalesmoreira.fakebank.services.implementations
 
+import br.com.lucassalesmoreira.fakebank.mappers.IUserMapper
 import br.com.lucassalesmoreira.fakebank.models.dto.UserDTO
+import br.com.lucassalesmoreira.fakebank.models.dto.UserUpdateDTO
 import br.com.lucassalesmoreira.fakebank.models.entity.UserEntity
 import br.com.lucassalesmoreira.fakebank.repositorys.IUserRepository
 import br.com.lucassalesmoreira.fakebank.services.IUserService
 import org.springframework.stereotype.Service
+import java.util.UUID
 
 @Service
-class UserServiceImpl(var iUserRepository: IUserRepository): IUserService {
+class UserServiceImpl(val iUserRepository: IUserRepository, val iUserMapper: IUserMapper): IUserService {
     override fun create(userDTO: UserDTO): List<UserEntity> {
-        val userEntity = UserEntity(
-            name = userDTO.name,
-            email = userDTO.email,
-            pass = userDTO.pass,
-            money = userDTO.money,
-            active = userDTO.active
-        )
+        val userEntity = iUserMapper.toEntity(userDTO)
+        userEntity.id = UUID.randomUUID().toString()
         println(userEntity.toString())
         iUserRepository.save(userEntity)
         return iUserRepository.findAll().toList()
@@ -33,7 +31,7 @@ class UserServiceImpl(var iUserRepository: IUserRepository): IUserService {
         return iUserRepository.findAllById(listOf(id)).first()
     }
 
-    override fun update(userDTO: UserDTO, id: String): Boolean {
+    override fun update(userDTO: UserUpdateDTO, id: String): Boolean {
         return try {
             iUserRepository.updateUserById(userDTO.name, id)
             true

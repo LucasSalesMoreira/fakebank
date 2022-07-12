@@ -20,8 +20,8 @@ class PixServiceImpl(
         // Verifica o saldo do remetente do pix
         if (senderUser.money!! >= pixDTO.value) {
             val pixEntity: PixEntity = iPixRepository.save(PixEntity(
-                senderId = senderUser.id!!,
-                recipientId = recipientUser.id!!,
+                sender = senderUser,
+                recipient = recipientUser,
                 value = pixDTO.value
             ))
             // Subtrai valor do pix da conta do remetente

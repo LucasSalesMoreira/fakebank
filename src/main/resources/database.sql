@@ -16,5 +16,5 @@ create table pix (
     value double
 );
 
-select * from user;
-select count(id) from pix;
+alter table pix add foreign key (sender_user_id) references user(id);
+alter table pix add foreign key (recipient_user_id) references user(id);
