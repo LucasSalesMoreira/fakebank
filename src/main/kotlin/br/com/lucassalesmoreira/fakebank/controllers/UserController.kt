@@ -18,6 +18,7 @@ class UserController(var iUserService: IUserService) {
             ResponseEntity.badRequest().body(MessageError("Problema ao processar a requisição"))
         }
     }
+
     @PostMapping
     fun add(@RequestBody userDTO: UserDTO): ResponseEntity<Any> {
         return try {
