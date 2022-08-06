@@ -25,7 +25,7 @@ class TransactionHistoryController(
     @GetMapping("/{senderId}")
     fun getBySenderId(@PathVariable senderId: String): ResponseEntity<Any> {
         return try {
-            ResponseEntity.ok(iTransactionHistory.getBySenderId(senderId))
+            ResponseEntity.ok(iTransactionHistory.getAllBySenderId(senderId))
         } catch (error: Exception) {
             ResponseEntity.badRequest().body(MessageError("Problema ao processar a requisição"))
         }
